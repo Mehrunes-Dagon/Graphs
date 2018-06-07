@@ -132,13 +132,46 @@ export class Graph {
    * BFS
    */
   bfs(start) {
-    // !!! IMPLEMENT ME
+    let randColor =
+      'rgb(' +
+      Math.floor(Math.random() * 256) +
+      ',' +
+      Math.floor(Math.random() * 256) +
+      ',' +
+      Math.floor(Math.random() * 256) +
+      ')';
+
+    let queue = [];
+    let found = [];
+    found.push(start);
+
+    start.color = randColor;
+
+    while (queue.length > 0) {
+      const v = queue[0];
+      for (let edge of v.edges) {
+        if (!found.includes(edge.destination)) {
+          found.push(edge.destination);
+          queue.push(edge.destination);
+          edge.destination.color = randColor;
+        }
+      }
+
+      queue.shift();
+    }
+    return found;
   }
 
   /**
    * Get the connected components
    */
   getConnectedComponents() {
-    // !!! IMPLEMENT ME
+    let searched = [];
+
+    for (let vertex of this.vertexes) {
+      if (searched.includes(vertex)) {
+        searched = searched.concat(this.bfs(vertex));
+      }
+    }
   }
 }

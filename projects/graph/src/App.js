@@ -131,6 +131,7 @@ class App extends Component {
       graph: new Graph()
     };
     this.state.graph.debugTestData();
+    this.state.graph.getConnectedComponents();
 
     // !!! IMPLEMENT ME
     // use the graph randomize() method
