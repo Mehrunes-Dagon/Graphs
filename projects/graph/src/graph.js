@@ -2,14 +2,20 @@
  * Edge
  */
 export class Edge {
-  // !!! IMPLEMENT ME
+  constructor(destination) {
+    this.destination = destination;
+  }
 }
 
 /**
  * Vertex
  */
 export class Vertex {
-  // !!! IMPLEMENT ME
+  constructor(value = 'default', pos = { x: -1, y: -1 }) {
+    this.edges = []; // list of vertexes
+    this.value = value;
+    this.pos = pos;
+  }
 }
 
 /**
@@ -17,13 +23,29 @@ export class Vertex {
  */
 export class Graph {
   constructor() {
-    this.vertexes = [];
+    console.log('Graph Contructor called');
+    this.vertexes = []; // list of vertexes
+  }
+
+  debugTestData() {
+    console.log('called test');
+    let debugV1 = new Vertex('t1', { x: 40, y: 40 });
+    let debugV2 = new Vertex('t2', { x: 80, y: 80 });
+    let debugV3 = new Vertex('t3', { x: 100, y: 100 });
+    // console.log(debugV1);
+    let debugEdge1 = new Edge(debugV2); // 1 to 2
+    debugV1.edges.push(debugEdge1);
+
+    let debugEdge2 = new Edge(debugV3); // 2 to 3
+    debugV2.edges.push(debugEdge2);
+
+    this.vertexes.push(debugV1, debugV2, debugV3);
   }
 
   /**
    * Create a random graph
    */
-  randomize(width, height, pxBox, probability=0.6) {
+  randomize(width, height, pxBox, probability = 0.6) {
     // Helper function to set up two-way edges
     function connectVerts(v0, v1) {
       v0.edges.push(new Edge(v1));
@@ -51,14 +73,14 @@ export class Graph {
         // Connect down
         if (y < height - 1) {
           if (Math.random() < probability) {
-            connectVerts(grid[y][x], grid[y+1][x]);
+            connectVerts(grid[y][x], grid[y + 1][x]);
           }
         }
 
         // Connect right
         if (x < width - 1) {
           if (Math.random() < probability) {
-            connectVerts(grid[y][x], grid[y][x+1]);
+            connectVerts(grid[y][x], grid[y][x + 1]);
           }
         }
       }
